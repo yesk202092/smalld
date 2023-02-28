@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.smalld</groupId>
+        <artifactId>smalld-parent</artifactId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.smalld</groupId>
+    <artifactId>${projectName}</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>${projectName}</name>
+    <description>${projectName}</description>
+
+
+    <modules>
+        <module>${projectName}-api</module>
+        <module>${projectName}-app</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <api.version>1.0.0-SNAPSHOT</api.version>
+        <smalld-common.version>1.0.0-RELEASE</smalld-common.version>
+        <spring.cloud.openfeign.version>3.0.7</spring.cloud.openfeign.version>
+    </properties>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <dependency>
+                <groupId>com.smalld</groupId>
+                <artifactId>smalld-common</artifactId>
+                <version>${smalld-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring.cloud.openfeign.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

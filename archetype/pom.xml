@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.smalld</groupId>
+        <artifactId>smalld-parent</artifactId>
+        <version>1.0.0-RELEASE</version>
+    </parent>
+
+    <groupId>com.smalld</groupId>
+    <artifactId>archetype</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>archetype</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+        <hutool.version>5.6.4</hutool.version>
+        <jasypt.version>3.0.3</jasypt.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- 数据库加密包 -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!--用于数据库-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <!-- java工具包，各种工具类 时间处理，数字处理字符处理等-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-parent</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <!--这里的id与settings.xml中的servers节点配置的用户ID一直，这样才能使用配置的用户去上传到maven私有仓库 -->
+            <!--此仓库对应的为RELEASE版本的jar-->
+            <id>nexus</id>
+            <url>http://47.111.147.184:18081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <!--这里的id与settings.xml中的servers节点配置的用户ID一直，这样才能使用配置的用户去上传到maven私有仓库 -->
+            <!--此仓库对应的为SNAPSHOT版本的jar-->
+            <id>nexus</id>
+            <url>http://47.111.147.184:18081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
