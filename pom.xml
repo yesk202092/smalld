@@ -16,7 +16,7 @@
     <artifactId>smalld-parent</artifactId>
     <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
-    <name>cloud-parent</name>
+    <name>smalld-parent</name>
     <description>Smalld SDK dependencies for spring cloud.</description>
 
     <properties>
