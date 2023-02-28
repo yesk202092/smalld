@@ -77,15 +77,6 @@ spring:
             - name: Retry
               args:
                 retries: 1 #重试次数
-        - id: snowy-biz-app
-          uri: lb://snowy-biz-app
-          predicates:
-            - Path=/api/bizapp/**
-          filters:
-            - StripPrefix=2 #去掉Path中前两个节点
-            - name: Retry
-              args:
-                retries: 1 #重试次数
 
 # 开放所有endpoint，实际生产根据自身需要开放，出于安全考虑不建议全部开放
 management:
