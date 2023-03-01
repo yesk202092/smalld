@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  　　* @author yesk
  　　* @date 2021/8/6 10:22
  　　*/
-@FeignClient(value = "xxx-user",url = "user.smalld.com:port/")
+@FeignClient(value = "${projectName}")
 public interface TestServer{
     /**
      *@Description 这是一个测试方法

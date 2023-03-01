@@ -29,14 +29,6 @@ spring:
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
 
-
-  boot:
-    admin:
-      client:
-        url: http://localhost:9001
-        instance:
-          # 默认使用的是主机名注册，改为使用ip注册
-          prefer-ip: true
   cloud:
     # nacos配置
     nacos:
@@ -68,12 +60,21 @@ spring:
           lowerCaseServiceId: true
           enabled: true
       routes:
-        - id: archetype
-          uri: lb://archetype
+        - id: user-center
+          uri: lb://user-center
           predicates:
-            - Path=/archetype/** #访问需要加上这个
+            - Path=/user/** #访问需要加上这个
           filters:
-            - StripPrefix=2 #去掉Path中前两个节点
+            - StripPrefix=1 #去掉Path中前1个节点
+            - name: Retry
+              args:
+                retries: 1 #重试次数
+        - id: test-center
+          uri: lb://test-center
+          predicates:
+            - Path=/test/** #访问需要加上这个
+          filters:
+            - StripPrefix=1 #去掉Path中前1个节点
             - name: Retry
               args:
                 retries: 1 #重试次数

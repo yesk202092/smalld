@@ -79,9 +79,6 @@ spring:
     multipart:
       max-request-size: 100MB
 
-#idea控制台默认日志级别修改
-debug: true
-
 ############### mybatis-plus配置 ###############
 mybatis-plus:
   configuration:

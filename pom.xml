@@ -59,6 +59,7 @@
 
         <freemarker.version>2.3.30</freemarker.version>
         <jwt.version>3.8.3</jwt.version>
+        <nacos.version>2021.1</nacos.version>
 
     </properties>
 
@@ -113,6 +114,20 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+
+
+            <!-- nacos 配置中心客户端 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+
 
 
             <!-- SpringCloud BootStrap -->
@@ -157,7 +172,12 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
             </dependency>
 
             <!-- easy-trans 排除自带MP版本使用最新版本 -->
@@ -285,11 +305,7 @@
                 <version>${dynamic.datasource.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
-                <version>${mybatis-plus-generator.version}</version>
-            </dependency>
+
             <!-- Freemarker jar -->
             <dependency>
                 <groupId>org.freemarker</groupId>
