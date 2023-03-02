@@ -1,7 +1,7 @@
 package ${groupPath}.biz.${artifactPath}.bo;
 
 import ${groupPath}.biz.${artifactPath}.bo.base.IdBO;
-import ${groupPath}.biz.${artifactPath}.bo.base.PageBO;
+import com.smalld.common.page.PageBO;
 
 import java.io.Serializable;
 

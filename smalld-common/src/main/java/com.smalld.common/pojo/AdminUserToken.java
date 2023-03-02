@@ -8,9 +8,13 @@ public class AdminUserToken {
 
     private String userNo;
 
-    private String name;
+    private String userName;
 
     private String realName;
 
     private String source;
+
+    private String email;
+
+    private String tenant;
 }

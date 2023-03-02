@@ -5,7 +5,6 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
-import com.smalld.common.pojo.CommonResult;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.smalld.${artifactId}.api;
 
-import com.smalld.common.pojo.CommonResult;
+import com.smalld.common.pojo.DataResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +21,6 @@ public interface TestServer{
      *@Return com.smalld.marlin.common.base.DataResult<java.lang.Void>
      */
     @RequestMapping(value = "/server/test",method = RequestMethod.GET)
-    CommonResult<Void> test();
+    DataResult<Void> test();
 }
 

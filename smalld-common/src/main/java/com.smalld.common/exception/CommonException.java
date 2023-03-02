@@ -2,6 +2,7 @@
 package com.smalld.common.exception;
 
 import cn.hutool.core.util.StrUtil;
+import com.smalld.common.enums.CommonExceptionEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,5 +36,11 @@ public class CommonException extends RuntimeException {
         super(StrUtil.format(msg, arguments));
         this.code = code;
         this.msg = StrUtil.format(msg, arguments);
+    }
+
+    public CommonException(CommonExceptionEnum commonExceptionEnum) {
+        super(commonExceptionEnum.getMessage());
+        this.code = commonExceptionEnum.getCode();
+        this.msg = commonExceptionEnum.getMessage();
     }
 }

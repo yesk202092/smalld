@@ -1,8 +1,11 @@
 package com.smalld.common.intercapt;
 
+import com.smalld.common.annotation.PassToken;
+import com.smalld.common.enums.CommonExceptionEnum;
 import com.smalld.common.exception.CommonException;
 import com.smalld.common.pojo.AdminUserToken;
 import com.smalld.common.util.AdminSessionHelper;
+import com.smalld.common.util.JwtUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,6 +21,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 @Component
@@ -36,11 +40,19 @@ public class AdminRequestAspect {
         Object obj = null;
         String methodName = null;
         boolean printRequest = true;
-        boolean printResponse = true;
 
         try {
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Method method = signature.getMethod();
+            Annotation[][] annotations = method.getParameterAnnotations();
+            for (Annotation[] annotation : annotations) {
+                for (Annotation annotation1 : annotation) {
+                    if (!((PassToken) annotation1).required()) {
+                        obj = joinPoint.proceed();
+                        return obj;
+                    }
+                }
+            }
             String[] classNameArray = method.getDeclaringClass().getName().split("\\.");
             methodName = classNameArray[classNameArray.length - 1] + "." + method.getName();
             String params = this.buildParamsDefault(joinPoint);
@@ -49,20 +61,22 @@ public class AdminRequestAspect {
             String token = tokenModel.getToken();
             if (StringUtils.isNotBlank(token)) {
                 if (StringUtils.isBlank(token)) {
-                    throw new CommonException("token不存在", new Object[0]);
+                    throw new CommonException(CommonExceptionEnum.ERROR401);
                 }
                 try {
-                    //todo 获取到token 然后放在内存里
-                    AdminUserToken userVo = new AdminUserToken();
-                    AdminSessionHelper.getInstance().setAdminUserVo(userVo);
-
+                    //校验token
+                    JwtUtils.verifyAdminToken(token, tokenModel.getTenant());
+                    //解析token
+                    AdminUserToken adminUserToken = JwtUtils.getAdminUserToken(token);
+                    AdminSessionHelper.getInstance().setAdminUserVo(adminUserToken);
                 } catch (Exception var20) {
                     log.error("Token解析异常:{}", var20.getMessage());
+                    throw new CommonException(CommonExceptionEnum.ERROR401);
                 }
             }
             obj = joinPoint.proceed();
         } finally {
-            log.info("[APP_RESPONSE] {}, time={}ms, result={}", new Object[]{methodName, System.currentTimeMillis() - start });
+            log.info("[APP_RESPONSE] {}, time={}ms, result={}", new Object[]{methodName, System.currentTimeMillis() - start});
         }
         AdminSessionHelper.getInstance().removeAdminUserVo();
         return obj;
@@ -91,9 +105,10 @@ public class AdminRequestAspect {
             return tokenModel;
         } else {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            String javaToken;
-            javaToken = request.getHeader("token");
+            String javaToken = request.getHeader("token");
+            String tenant = request.getHeader("tenant");
             tokenModel.setToken(javaToken);
+            tokenModel.setTenant(tenant);
             return tokenModel;
         }
     }
@@ -101,6 +116,17 @@ public class AdminRequestAspect {
     private static class TokenModel {
         private String token = "";
         private String uri;
+
+        private String tenant;
+
+        public String getTenant() {
+            return tenant;
+        }
+
+        public void setTenant(String tenant) {
+            this.tenant = tenant;
+        }
+
         public TokenModel() {
         }
 
@@ -129,7 +155,7 @@ public class AdminRequestAspect {
                 AdminRequestAspect.TokenModel other = (AdminRequestAspect.TokenModel) o;
                 if (!other.canEqual(this)) {
                     return false;
-                }  else {
+                } else {
                     Object this$token = this.getToken();
                     Object other$token = other.getToken();
                     if (this$token == null) {

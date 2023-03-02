@@ -34,7 +34,7 @@ public class CommonEntity implements Serializable {
 
     /** 创建人 */
     @TableField(fill = FieldFill.INSERT)
-    private String createUser;
+    private String createBy;
 
     /** 更新时间 */
     @TableField(fill = FieldFill.UPDATE)
@@ -42,5 +42,5 @@ public class CommonEntity implements Serializable {
 
     /** 更新人 */
     @TableField(fill = FieldFill.UPDATE)
-    private String updateUser;
+    private String updateBy;
 }

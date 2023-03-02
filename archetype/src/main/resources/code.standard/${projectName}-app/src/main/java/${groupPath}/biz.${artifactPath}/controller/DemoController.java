@@ -1,6 +1,6 @@
 package ${groupPath}.biz.${artifactPath}.controller;
 
-import com.smalld.common.pojo.CommonResult;
+import com.smalld.common.pojo.DataResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +21,8 @@ public class DemoController {
      * @date 2021/9/15  18:14
      */
     @GetMapping(value = "/auth/query")
-    public CommonResult<Object> query(@RequestParam Long id) {
-        return CommonResult.ok();
+    public DataResult<Object> query(@RequestParam Long id) {
+        return DataResult.success();
     }
 
 
