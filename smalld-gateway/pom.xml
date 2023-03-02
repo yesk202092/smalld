@@ -74,13 +74,6 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
-        <!-- https://blog.csdn.net/Tuine/article/details/122153363 -->
-        <!-- caffeine缓存实现 -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-
         <!-- openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -98,8 +91,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-
-        <!-- Alibaba Sentinel -->
 
         <!-- admin -->
         <dependency>
@@ -139,24 +130,11 @@
             <version>${kotlin.version}</version>
             <optional>true</optional>
         </dependency>
-
-        <!-- jwt token -->
-        <!--        <dependency>-->
-        <!--            <groupId>io.jsonwebtoken</groupId>-->
-        <!--            <artifactId>jjwt</artifactId>-->
-        <!--        </dependency>-->
-
         <!-- 数据库驱动,可根据自己需要自行删减 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-        </dependency>
-        -->
 
         <!-- druid -->
         <dependency>

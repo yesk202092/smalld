@@ -5,6 +5,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
+import com.smalld.common.pojo.DataResult;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class CommonResponseUtil {
     public static void renderError(HttpServletResponse response, String msg) throws IOException {
         response.setCharacterEncoding(CharsetUtil.UTF_8);
         response.setContentType(ContentType.JSON.toString());
-        response.getWriter().write(JSONUtil.toJsonStr(ObjectUtil.isNotEmpty(msg)?CommonResult.error(msg):CommonResult.error()));
+        response.getWriter().write(JSONUtil.toJsonStr(ObjectUtil.isNotEmpty(msg)? DataResult.error(msg):DataResult.error()));
     }
 
     /**
@@ -48,6 +49,6 @@ public class CommonResponseUtil {
     public static void renderError(HttpServletResponse response, Integer code, String msg) throws IOException {
         response.setCharacterEncoding(CharsetUtil.UTF_8);
         response.setContentType(ContentType.JSON.toString());
-        response.getWriter().write(JSONUtil.toJsonStr(CommonResult.get(code, msg, null)));
+        response.getWriter().write(JSONUtil.toJsonStr(DataResult.get(code, msg, null)));
     }
 }
