@@ -1,5 +1,4 @@
-/*
-package com.smalld.common.intercapt;
+package intercapt;
 
 import com.smalld.common.annotation.PassToken;
 import com.smalld.common.enums.CommonExceptionEnum;
@@ -58,7 +57,7 @@ public class AdminRequestAspect {
             methodName = classNameArray[classNameArray.length - 1] + "." + method.getName();
             String params = this.buildParamsDefault(joinPoint);
             log.info("[APP_REQUEST] {}, params={}", methodName, printRequest ? params : "{}");
-            AdminRequestAspect.TokenModel tokenModel = this.getToken();
+            TokenModel tokenModel = this.getToken();
             String token = tokenModel.getToken();
             if (StringUtils.isNotBlank(token)) {
                 if (StringUtils.isBlank(token)) {
@@ -99,9 +98,9 @@ public class AdminRequestAspect {
         return params;
     }
 
-    private AdminRequestAspect.TokenModel getToken() {
+    private TokenModel getToken() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        AdminRequestAspect.TokenModel tokenModel = new AdminRequestAspect.TokenModel();
+        TokenModel tokenModel = new TokenModel();
         if (requestAttributes == null) {
             return tokenModel;
         } else {
@@ -150,10 +149,10 @@ public class AdminRequestAspect {
         public boolean equals(Object o) {
             if (o == this) {
                 return true;
-            } else if (!(o instanceof AdminRequestAspect.TokenModel)) {
+            } else if (!(o instanceof TokenModel)) {
                 return false;
             } else {
-                AdminRequestAspect.TokenModel other = (AdminRequestAspect.TokenModel) o;
+                TokenModel other = (TokenModel) o;
                 if (!other.canEqual(this)) {
                     return false;
                 } else {
@@ -183,7 +182,7 @@ public class AdminRequestAspect {
         }
 
         protected boolean canEqual(Object other) {
-            return other instanceof AdminRequestAspect.TokenModel;
+            return other instanceof TokenModel;
         }
 
         public int hashCode() {
@@ -201,4 +200,3 @@ public class AdminRequestAspect {
         }
     }
 }
-*/
