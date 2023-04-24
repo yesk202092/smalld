@@ -85,7 +85,6 @@ public class AdminRequestAspect {
 
     private String buildParamsDefault(ProceedingJoinPoint call) {
         String params = "[";
-
         for (int i = 0; i < call.getArgs().length; ++i) {
             Object obj = call.getArgs()[i];
             if (i != call.getArgs().length - 1) {

@@ -1,13 +1,16 @@
-package ${groupPath}.common.util;
+package com.smalld.core.cache;
+
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -16,17 +19,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * redis工具类
+ * redis操作类
  *
  * @author yesk
  * @date 2021/9/17  14:10
  */
 @Slf4j
-@Service
-public class RedisUtil {
+@Component
+@Order(3)
+public class RedisOperator {
 
     @Autowired
     public RedisTemplate redisTemplate;
+
+
+    @Autowired
+    RedissonClient redissonClient;
 
     /**
      * 普通缓存放入
@@ -37,8 +45,7 @@ public class RedisUtil {
      */
     public boolean putValue(String key, Object value) {
         try {
-            redisTemplate.opsForValue().set(key, value);
-            return true;
+            return redisTemplate.opsForValue().setIfAbsent(key, value);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -57,11 +64,10 @@ public class RedisUtil {
     public boolean putValueByTime(String key, Object value, long time) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+                return redisTemplate.opsForValue().setIfAbsent(key, value, time, TimeUnit.SECONDS);
             } else {
-                putValue(key, value);
+                return putValue(key, value);
             }
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -77,10 +83,10 @@ public class RedisUtil {
      * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false 失败
      */
-    public boolean putValueByTime(String key, Object value, long time,TimeUnit timeUnit) {
+    public boolean putValueByTime(String key, Object value, long time, TimeUnit timeUnit) {
         try {
             if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, timeUnit);
+                redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
             } else {
                 putValue(key, value);
             }
@@ -390,95 +396,41 @@ public class RedisUtil {
         }
     }
 
-
-    /**
-     * @param key redis key, 唯一键
-     * @return
-     * @desc 加锁 true已锁  false未锁 手动中断锁 别忘了调releaseLock
-     */
-    public boolean lock(String key, String value) {
-        // 对应setnx命令
-        if (redisTemplate.opsForValue().setIfAbsent(key, value)) {
-            //可以成功设置,也就是key不存在
-            return true;
+    public Boolean lock(String bom) {
+        if (redissonClient == null) {
+            log.info("redissonClient is null");
+            return false;
         }
-        return false;
-    }
-
-    /**
-     * @param key   redis key, 唯一键
-     * @param value redis value, 这里是时间戳
-     * @return
-     * @desc 加锁 true已锁  false未锁
-     */
-    public boolean lockByTime(String key, String value, Long seconds) {
-        // 对应setnx命令
-        if (redisTemplate.opsForValue().setIfAbsent(key, value, seconds, TimeUnit.SECONDS)) {
-            //可以成功设置,也就是key不存在
-            return true;
-        }
-        // 判断锁超时 - 防止原来的操作异常，没有运行解锁操作  防止死锁
-        String currentValue = (String) redisTemplate.opsForValue().get(key);
-        // 如果锁过期
-        // currentValue 不为空且小于当前时间
-        if (!StringUtils.isEmpty(currentValue) && Long.parseLong(currentValue) < System.currentTimeMillis()) {
-            // 获取上一个锁的时间value
-            // 对应getset，如果key存在返回当前key的值，并重新设置新的值
-            // redis是单线程处理，即使并发存在，这里的getAndSet也是单个执行
-            // 所以，加上下面的 !StringUtils.isEmpty(oldValue) && oldValue.equals(currentValue)
-            // 就能轻松解决并发问题
-            String oldValue = (String) redisTemplate.opsForValue().getAndSet(key, value);
-            if (!StringUtils.isEmpty(oldValue) && oldValue.equals(currentValue)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * @param key   redis key, 唯一键
-     * @param value redis value, 这里是时间戳
-     * @return
-     * @desc 加锁 true已锁  false未锁 自旋锁
-     */
-    public boolean lockAndWait(String key, String value, Long seconds) {
-        if (redisTemplate.opsForValue().setIfAbsent(key, value, seconds, TimeUnit.SECONDS)) {
-            //可以成功设置,也就是key不存在
-            return true;
-        } else {
-            // 自旋获取锁
-            // 休眠1000ms继续获取锁
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //尝试获取锁
-            lockAndWait(key, value, seconds);
-        }
-        return false;
-    }
-
-    /**
-     * @param key redis key, 唯一键
-     * @return
-     * @desc 释放锁 true已释放  false未释放
-     */
-    public void releaseLock(String key) {
         try {
-            String currentValue = (String) redisTemplate.opsForValue().get(key);
-            if (!StringUtils.isEmpty(currentValue)) {
-                // 删除key
-                redisTemplate.opsForValue().getOperations().delete(key);
-            }
+            RLock rLock = redissonClient.getLock(bom);
+            rLock.lock(15, TimeUnit.SECONDS);
+            log.info("lock success");
+            return true;
         } catch (Exception e) {
-            log.error("解锁出现异常了，{}", e);
+            log.info("lock fail");
+            return false;
+        }
+    }
+
+    public Boolean unlock(String bom) {
+        if (redissonClient == null) {
+            log.info("redissonClient is null");
+            return false;
+        }
+        try {
+            RLock rLock = redissonClient.getLock(bom);
+            rLock.unlock();
+            log.info("unlock success");
+            return true;
+        } catch (Exception e) {
+            log.info("unlock fail");
+            return false;
         }
     }
 
     /**
      * 从hash中 获取value
+     *
      * @param mapKey
      * @param key
      * @return

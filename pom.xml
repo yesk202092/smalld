@@ -68,12 +68,12 @@
 
         <!--基础公共模块-->
         <module>smalld-common</module>
-        <!--插件-->
-        <module>smalld-core</module>
         <!--网关-->
         <module>smalld-gateway</module>
         <!--自动生成子模块-->
         <module>archetype</module>
+        <!--统一插件-->
+        <module>smalld-base</module>
 
 
     </modules>
@@ -217,7 +217,7 @@
                 </exclusions>
             </dependency>
 
-            <!-- redis -->
+
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
@@ -305,6 +305,11 @@
                 <version>${dynamic.datasource.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>3.16.1</version>
+            </dependency>
 
             <!-- Freemarker jar -->
             <dependency>
