@@ -28,6 +28,7 @@
         <java.version>1.8</java.version>
         <api.version>1.0.0-SNAPSHOT</api.version>
         <smalld-common.version>1.0.0-RELEASE</smalld-common.version>
+        <smalld-base.version>1.0.0-RELEASE</smalld-base.version>
         <spring.cloud.openfeign.version>3.0.7</spring.cloud.openfeign.version>
     </properties>
 
@@ -44,6 +45,13 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.openfeign.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.smalld</groupId>
+                <artifactId>smalld-base</artifactId>
+                <version>${smalld-base.version}</version>
+            </dependency>
         </dependencies>
+
+
     </dependencyManagement>
 </project>

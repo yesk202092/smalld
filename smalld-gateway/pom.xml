@@ -34,12 +34,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.smalld</groupId>
-            <artifactId>smalld-base</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
 
         <dependency>
             <groupId>org.apache.commons</groupId>

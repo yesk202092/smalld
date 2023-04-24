@@ -51,11 +51,12 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <artifactId>fastjson</artifactId>
         </dependency>
+
+        <!-- druid -->
 
         <!-- mybatis-plus -->
         <dependency>

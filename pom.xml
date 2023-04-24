@@ -43,6 +43,7 @@
         <easy.trans.version>2.0.3</easy.trans.version>
         <commons.pool2.version>2.11.1</commons.pool2.version>
         <hutool.version>5.8.8</hutool.version>
+        <fastjson.version>2.0.29</fastjson.version>
         <pinyin.version>2.5.1</pinyin.version>
         <ip2region.version>2.6.3</ip2region.version>
         <easypoi.version>4.3.0</easypoi.version>
@@ -229,6 +230,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!-- pinyin4j -->
