@@ -2,6 +2,9 @@ package com.smalld.common.page;
 
 import lombok.Data;
 
+/**
+ * @author yesk
+ */
 @Data
 public class PageBO {
 

@@ -1,7 +1,9 @@
 package com.smalld.common.pojo;
 
 import lombok.Data;
-
+/**
+ * @author yesk
+ */
 @Data
 public class UserToken {
 

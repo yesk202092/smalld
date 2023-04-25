@@ -2,7 +2,9 @@ package com.smalld.common.util;
 
 import com.smalld.common.pojo.UserToken;
 import org.slf4j.MDC;
-
+/**
+ * @author yesk
+ */
 public class SessionHelper {
     private static final ThreadLocal<UserToken> threadLocal = new ThreadLocal();
 

@@ -6,6 +6,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author yesk
+ */
 @Component
 @Order(3)
 @Aspect

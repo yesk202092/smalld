@@ -15,7 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
-
+/**
+ * @author yesk
+ */
 public class JwtUtils {
 
     private final static String SECRET = "secret";

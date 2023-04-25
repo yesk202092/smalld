@@ -2,7 +2,9 @@ package com.smalld.common.util;
 
 import com.smalld.common.pojo.AdminUserToken;
 import org.slf4j.MDC;
-
+/**
+ * @author yesk
+ */
 public class AdminSessionHelper {
     private static final ThreadLocal<AdminUserToken> threadLocal = new ThreadLocal();
 
