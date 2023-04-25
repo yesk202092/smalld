@@ -1,4 +1,4 @@
-package com.smalld.common.util;
+package com.smalld.core.code;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 public class AESUtil {
     private static final Logger logger = LoggerFactory.getLogger(AESUtil.class);
     static final String KEY_ALGORITHM = "AES";

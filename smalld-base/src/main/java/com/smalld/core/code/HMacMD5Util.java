@@ -1,4 +1,4 @@
-package com.smalld.common.util;
+package com.smalld.core.code;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
