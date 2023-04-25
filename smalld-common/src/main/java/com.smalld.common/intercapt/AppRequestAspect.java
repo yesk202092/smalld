@@ -1,4 +1,4 @@
-/*
+
 package com.smalld.common.intercapt;
 
 import org.aspectj.lang.annotation.Aspect;
@@ -15,4 +15,3 @@ public class AppRequestAspect {
     public void getMethod() {
     }
 }
-*/
