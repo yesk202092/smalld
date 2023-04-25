@@ -6,10 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 防重复提交
+ * 参数加密
  * @author yesk
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RedisLock {
+public @interface ParamEncrypted {
+    boolean required() default false;
 }
