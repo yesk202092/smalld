@@ -154,7 +154,6 @@
                 <version>${spring.boot.admin-version}</version>
             </dependency>
 
-            <!-- ===================== snowy-common ========================= -->
             <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>

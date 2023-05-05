@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author yesk
+ */
 @Component
 @Order(2)
 public class RedissonConfig {
