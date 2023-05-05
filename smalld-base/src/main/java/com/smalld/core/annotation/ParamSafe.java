@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ParamEncrypted {
+public @interface ParamSafe {
     boolean required() default false;
 }
