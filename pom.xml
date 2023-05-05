@@ -74,7 +74,7 @@
         <!--自动生成子模块-->
         <module>archetype</module>
         <!--统一插件-->
-        <module>smalld-base</module>
+        <module>smalld-core</module>
 
 
     </modules>

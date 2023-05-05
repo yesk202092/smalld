@@ -1,4 +1,4 @@
-package com.smalld.core.aop;
+package com.smalld.core.code.smalld;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ParamEncryptedAspect {
 
-    @Pointcut("execution(* com.smalld..Admin*Controller.*(..)) || execution(* com.smalld..admin..*Controller.*(..))")
+    @Pointcut("@annotation(com.smalld.electric.api.annotation.ApiClickLock)")
     public void getMethod() {
     }
 }
